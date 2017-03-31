@@ -13,12 +13,12 @@ public class ChangeCalculator {
 
 	public List<Map<Integer, Integer>> calculateCoinOptions(int target) {
 		answers = new ArrayList<>();
-		run(new HashMap<>(), 0, target);
+		recurseToCalculateCoinOptions(new HashMap<>(), 0, target);
 
 		return answers;
 	}
 
-	private void run(Map<Integer, Integer> soFar, int index, int target) {
+	private void recurseToCalculateCoinOptions(Map<Integer, Integer> soFar, int index, int target) {
 
 		for(int i = index; i < denoms.length; i++) {
 			int denom = denoms[i];
@@ -30,7 +30,7 @@ public class ChangeCalculator {
 				if(getTotal(copy) == target) {
 					addAnswer(copy);
 				} else {					
-					run(copy, i, target);
+					recurseToCalculateCoinOptions(copy, i, target);
 				}
 			}
 		}
