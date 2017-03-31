@@ -37,12 +37,7 @@ public class ChangeCalculator {
 	}
 
 	private Map<Integer, Integer> getCopy(Map<Integer, Integer> coinMap) {
-
-		Map<Integer, Integer> copy = new HashMap<>();
-		for(int denom: coinMap.keySet()) {
-			copy.put(denom, coinMap.get(denom));
-		}
-		return copy;
+		return new HashMap<Integer, Integer>(coinMap);
 	}
 
 	private void addDenom(Map<Integer, Integer> coinMap, int denom) {
