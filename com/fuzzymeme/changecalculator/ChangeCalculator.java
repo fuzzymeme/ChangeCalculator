@@ -69,7 +69,10 @@ public class ChangeCalculator {
 
 		System.out.println("All Answers:");
 		for(Map<Integer, Integer> answer: answers) {
-			System.out.println("----------- result: " + prettyPrintResultMap(answer) + ", Total: " + getTotal(answer));
+			System.out.println("----------- result: " 
+					+ prettyPrintResultMap(answer) 
+					+ ", Total: " 
+					+ getTotal(answer));
 		}
 	}
 
@@ -77,7 +80,11 @@ public class ChangeCalculator {
 
 		StringBuilder stringBuilder = new StringBuilder("{");
 		for(Map.Entry<Integer, Integer> entry: result.entrySet()) {
-			stringBuilder.append(entry.getValue()).append("x").append(entry.getKey()).append(" ");
+			stringBuilder
+				.append(entry.getValue())
+				.append("x")
+				.append(entry.getKey())
+				.append(" ");
 		}
 		return stringBuilder.toString().trim() + "}";
 	}
