@@ -7,12 +7,12 @@ import java.util.Map;
 
 public class ChangeCalculator {
 
-	private int[] denoms = new int[]{1, 5, 10, 25};
-	private List<Map<Integer, Integer>> answers = new ArrayList<>();
+	private final int[] denoms = new int[]{1, 5, 10, 25};
+	private final List<Map<Integer, Integer>> answers = new ArrayList<>();
 	private long lastPrintTime = System.currentTimeMillis();
 
 	public List<Map<Integer, Integer>> calculateCoinOptions(int target) {
-		answers = new ArrayList<>();
+		answers.clear();
 		recurseToCalculateCoinOptions(new HashMap<>(), 0, target);
 
 		return answers;
