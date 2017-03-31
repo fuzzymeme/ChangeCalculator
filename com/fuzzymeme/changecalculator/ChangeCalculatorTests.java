@@ -17,24 +17,10 @@ public class ChangeCalculatorTests {
 	public void test_Given11_returns4ItemListWithCorrectEntries() {
 
 		List<Map<Integer, Integer>> expected = new ArrayList<>();
-		Map<Integer, Integer> one = new HashMap<>();
-		one.put(1, 11);
-		expected.add(one);
-
-		Map<Integer, Integer> two = new HashMap<>();
-		two.put(1, 6);
-		two.put(5, 1);
-		expected.add(two);
-
-		Map<Integer, Integer> three = new HashMap<>();
-		three.put(1, 1);
-		three.put(5, 2);
-		expected.add(three);
-
-		Map<Integer, Integer> four = new HashMap<>();
-		four.put(1, 1);
-		four.put(10, 1);
-		expected.add(four);
+		expected.add(buildMap("1:11"));
+		expected.add(buildMap("1:6 5:1"));
+		expected.add(buildMap("1:1 5:2"));
+		expected.add(buildMap("1:1 10:1"));
 
 		ChangeCalculator changer = new ChangeCalculator();
 		List<Map<Integer, Integer>> calculated = changer.calculateCoinOptions(11);
@@ -42,13 +28,27 @@ public class ChangeCalculatorTests {
 		assertTrue(equivalentLists(calculated, expected));
 	}
 
-	//Helpers
+	//
+	// Helpers
+	//
 	private boolean equivalentLists(List<Map<Integer, Integer>> one, List<Map<Integer, Integer>> other) {
 
 		Set<Map<Integer, Integer>> oneSet = new HashSet<>(one);
 		Set<Map<Integer, Integer>> otherSet = new HashSet<>(other);
 
 		return oneSet.equals(otherSet);
+	}
+	
+	private Map<Integer, Integer> buildMap(String mapDefinition) {
+		
+		Map<Integer, Integer> result = new HashMap<>();
+		String[] items = mapDefinition.split(" ");
+		for(String item: items) {
+			String[] entry = item.split(":");
+			result.put(Integer.parseInt(entry[0].trim()), Integer.parseInt(entry[1].trim()));
+		}
+		
+		return result;
 	}
 
 }
