@@ -44,6 +44,26 @@ public class ChangeCalculatorTests {
 
 		assertFailIfNotEquivalentLists(calculated, expected);
 	}
+	
+	@Test
+	public void test_Given23_returns9ItemListWithCorrectEntries() {
+
+		List<Map<Integer, Integer>> expected = new ArrayList<>();
+		expected.add(buildMap("1:13 5:2"));
+		expected.add(buildMap("1:3 5:4"));
+		expected.add(buildMap("1:3 5:2 10:1"));
+		expected.add(buildMap("1:23"));
+		expected.add(buildMap("1:18 5:1"));
+		expected.add(buildMap("1:13 10:1"));
+		expected.add(buildMap("1:8 5:1 10:1"));
+		expected.add(buildMap("1:3 10:2"));
+		expected.add(buildMap("1:8 5:3"));
+
+		ChangeCalculator changer = new ChangeCalculator();
+		List<Map<Integer, Integer>> calculated = changer.calculateCoinOptions(23);
+
+		assertFailIfNotEquivalentLists(calculated, expected);
+	}
 
 	//
 	// Helpers
@@ -53,7 +73,16 @@ public class ChangeCalculatorTests {
 		Set<Map<Integer, Integer>> oneSet = new HashSet<>(one);
 		Set<Map<Integer, Integer>> otherSet = new HashSet<>(other);
 		
+		if(oneSet.size() != otherSet.size()) {
+			System.out.println("Two lists are different sizes " + oneSet.size() + " and " + otherSet.size());
+		}
+		
 		if(!oneSet.equals(otherSet)) {
+			for(Map<Integer, Integer> map: one) {
+				if(!otherSet.contains(map)) {
+					System.out.println("Missing: " + map);
+				}
+			}
 			System.out.println(oneSet + " does not equal " + otherSet);
 			fail("Two lists are not the same");
 		}
