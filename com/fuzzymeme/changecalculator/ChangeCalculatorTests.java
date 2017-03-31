@@ -25,16 +25,38 @@ public class ChangeCalculatorTests {
 		ChangeCalculator changer = new ChangeCalculator();
 		List<Map<Integer, Integer>> calculated = changer.calculateCoinOptions(11);
 
-		assertTrue(equivalentLists(calculated, expected));
+		assertFailIfNotEquivalentLists(calculated, expected);
+	}
+	
+	@Test
+	public void test_Given16_returns6ItemListWithCorrectEntries() {
+
+		List<Map<Integer, Integer>> expected = new ArrayList<>();
+		expected.add(buildMap("1:16"));
+		expected.add(buildMap("1:6 10:1"));
+		expected.add(buildMap("1:1 5:3"));
+		expected.add(buildMap("1:11 5:1"));
+		expected.add(buildMap("1:6 5:2"));
+		expected.add(buildMap("1:1 5:1 10:1"));
+
+		ChangeCalculator changer = new ChangeCalculator();
+		List<Map<Integer, Integer>> calculated = changer.calculateCoinOptions(16);
+
+		assertFailIfNotEquivalentLists(calculated, expected);
 	}
 
 	//
 	// Helpers
 	//
-	private boolean equivalentLists(List<Map<Integer, Integer>> one, List<Map<Integer, Integer>> other) {
+	private boolean assertFailIfNotEquivalentLists(List<Map<Integer, Integer>> one, List<Map<Integer, Integer>> other) {
 
 		Set<Map<Integer, Integer>> oneSet = new HashSet<>(one);
 		Set<Map<Integer, Integer>> otherSet = new HashSet<>(other);
+		
+		if(!oneSet.equals(otherSet)) {
+			System.out.println(oneSet + " does not equal " + otherSet);
+			fail("Two lists are not the same");
+		}
 
 		return oneSet.equals(otherSet);
 	}

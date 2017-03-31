@@ -6,35 +6,69 @@ import java.util.List;
 import java.util.Map;
 
 public class ChangeCalculator {
-	
-	
+
+	private int[] denoms = new int[]{1, 5, 10, 25};
+	private List<Map<Integer, Integer>> answers = new ArrayList<>();
+	private long lastPrintTime = System.currentTimeMillis();
+
 	public List<Map<Integer, Integer>> calculateCoinOptions(int target) {
+		answers = new ArrayList<>();
+		run(new HashMap<>(), 0, target);
 
-		List<Map<Integer, Integer>> expected = new ArrayList<>();
-		Map<Integer, Integer> one = new HashMap<>();
-		one.put(1, 11);
-		expected.add(one);
+		return answers;
+	}
 
-		Map<Integer, Integer> two = new HashMap<>();
-		two.put(1, 6);
-		two.put(5, 1);
-		expected.add(two);
+	private void run(Map<Integer, Integer> soFar, int index, int target) {
 
-		Map<Integer, Integer> three = new HashMap<>();
-		three.put(1, 1);
-		three.put(5, 2);
-		expected.add(three);
+		for(int i = index; i < denoms.length; i++) {
+			int denom = denoms[i];
 
-		Map<Integer, Integer> four = new HashMap<>();
-		four.put(1, 1);
-		four.put(10, 1);
-		expected.add(four);
-		
-		return expected;
+			if(getTotal(soFar) + denom <= target) {
+				Map<Integer, Integer> copy = getCopy(soFar);
+				addDenom(copy, denom);
+
+				if(getTotal(copy) == target) {
+					addAnswer(copy);
+				} else {					
+					run(copy, i, target);
+				}
+			}
+		}
+	}
+
+	private Map<Integer, Integer> getCopy(Map<Integer, Integer> coinMap) {
+
+		Map<Integer, Integer> copy = new HashMap<>();
+		for(int denom: coinMap.keySet()) {
+			copy.put(denom, coinMap.get(denom));
+		}
+		return copy;
+	}
+
+	private void addDenom(Map<Integer, Integer> coinMap, int denom) {
+
+		if(!coinMap.containsKey(denom)) {
+			coinMap.put(denom, 1);
+		} else {
+			coinMap.put(denom, coinMap.get(denom) + 1);
+		}
+	}
+
+	private int getTotal(Map<Integer, Integer> coinMap) {
+		int total = 0;
+		for(Integer denom: coinMap.keySet()) {
+			total += denom * coinMap.get(denom);
+		}
+		return total;
 	}
 	
-	public static void main(String[] args) {
-		
+	private void addAnswer(Map<Integer, Integer> newAnswer) {
+		if(System.currentTimeMillis() - lastPrintTime > 1000 ) {
+			lastPrintTime = System.currentTimeMillis();
+			System.out.println("results count: " + answers.size());
+		}
+
+		answers.add(newAnswer);
 	}
 
 }
