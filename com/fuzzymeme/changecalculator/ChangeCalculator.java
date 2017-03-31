@@ -25,7 +25,7 @@ public class ChangeCalculator {
 
 			if(getTotal(soFar) + denom <= target) {
 				Map<Integer, Integer> copy = getCopy(soFar);
-				addDenom(copy, denom);
+				incrementDenomCount(copy, denom);
 
 				if(getTotal(copy) == target) {
 					addAnswer(copy);
@@ -36,18 +36,17 @@ public class ChangeCalculator {
 		}
 	}
 
-	private Map<Integer, Integer> getCopy(Map<Integer, Integer> coinMap) {
-		return new HashMap<Integer, Integer>(coinMap);
-	}
-
-	private void addDenom(Map<Integer, Integer> coinMap, int denom) {
-
+	private void incrementDenomCount(Map<Integer, Integer> coinMap, int denom) {
 		if(!coinMap.containsKey(denom)) {
 			coinMap.put(denom, 1);
 		} else {
 			coinMap.put(denom, coinMap.get(denom) + 1);
 		}
 	}
+	
+	private Map<Integer, Integer> getCopy(Map<Integer, Integer> coinMap) {
+		return new HashMap<Integer, Integer>(coinMap);
+	}	
 
 	private int getTotal(Map<Integer, Integer> coinMap) {
 		int total = 0;
