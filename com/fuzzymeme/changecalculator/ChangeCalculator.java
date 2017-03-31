@@ -61,7 +61,7 @@ public class ChangeCalculator {
 		}
 		return total;
 	}
-	
+
 	private void addAnswer(Map<Integer, Integer> newAnswer) {
 		if(System.currentTimeMillis() - lastPrintTime > 1000 ) {
 			lastPrintTime = System.currentTimeMillis();
@@ -69,6 +69,31 @@ public class ChangeCalculator {
 		}
 
 		answers.add(newAnswer);
+	}
+
+	private void showAllAnswers() {
+
+		System.out.println("All Answers:");
+		for(Map<Integer, Integer> answer: answers) {
+			System.out.println("----------- result: " + prettyPrintResultMap(answer) + ", Total: " + getTotal(answer));
+		}
+	}
+
+	private String prettyPrintResultMap(Map<Integer, Integer> result) {
+
+		StringBuilder stringBuilder = new StringBuilder("{");
+		for(Map.Entry<Integer, Integer> entry: result.entrySet()) {
+			stringBuilder.append(entry.getValue()).append("x").append(entry.getKey()).append(" ");
+		}
+		return stringBuilder.toString().trim() + "}";
+	}
+
+	public static void main(String[] args) {
+
+		ChangeCalculator changer = new ChangeCalculator();
+		changer.calculateCoinOptions(16);
+		changer.showAllAnswers();
+		System.out.println("results count: " + changer.answers.size());
 	}
 
 }
