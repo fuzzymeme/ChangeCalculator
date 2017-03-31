@@ -64,6 +64,17 @@ public class ChangeCalculatorTests {
 
 		assertFailIfNotEquivalentLists(calculated, expected);
 	}
+	
+	@Test
+	public void test_Given0_returns0ItemList() {
+
+		List<Map<Integer, Integer>> expected = new ArrayList<>();
+
+		ChangeCalculator changer = new ChangeCalculator();
+		List<Map<Integer, Integer>> calculated = changer.calculateCoinOptions(0);
+
+		assertFailIfNotEquivalentLists(calculated, expected);
+	}
 
 	//
 	// Helpers
